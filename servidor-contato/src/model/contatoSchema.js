@@ -10,6 +10,7 @@ const ContatoSchema =  new Schema({
     nome :{
         type: String,
         require : true,
+        unique: true
     
     },
     celular:{
