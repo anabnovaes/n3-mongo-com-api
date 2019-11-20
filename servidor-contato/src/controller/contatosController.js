@@ -64,7 +64,7 @@ const getById = (request, response) =>{
   })
 }
 // deletando um contato pelo ID 
-const deleteId = (request, response) =>{
+const deleteById = (request, response) =>{
   const idParametro = request.params.id;
   contatosCollection.findByIdAndRemove(idParametro, (error, contato) =>{
     if (error){
@@ -84,5 +84,5 @@ module.exports = {
   add, 
   getByName,
   getById,
-  deleteId
+  deleteById
 }

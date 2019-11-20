@@ -7,5 +7,5 @@ router.get("/", controller.getAll)
 router.post("/criar", bodyParser.json(), controller.add)
 router.get("/nomes/:nome", controller.getByName)
 router.get("/id/:id", controller.getById)
-router.delete("/deletar/:id", controller.deleteId)
+router.delete("/deletar/:id", controller.deleteById)
 module.exports = router
