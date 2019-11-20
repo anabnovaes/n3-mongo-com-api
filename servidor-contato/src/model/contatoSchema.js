@@ -10,7 +10,7 @@ const ContatoSchema =  new Schema({
     nome :{
         type: String,
         require : true,
-        unique: true
+        unique: true // incluindo como chave primaria 
     
     },
     celular:{
@@ -18,7 +18,8 @@ const ContatoSchema =  new Schema({
         required: true
     },
     fotoPerfil:{
-        required: false
+        required: false,
+        type: String
     },
     dataNascimento: {
         type: Date,

@@ -10,6 +10,7 @@ const getAll = (request, response) => {
   })
 };
 
+//método para adicionar um novo contato
 const add = (request, response) => {
   // pegando os dados do JSON na request
   const contatoDoBody = request.body
@@ -26,24 +27,62 @@ const add = (request, response) => {
   })
 
 
-
-  // let baseDados = contatosCollection.agenda.contatos
-
-
-  // if (!contato.nome || !contato.dataNascimento || !contato.celular) {
-  //   response.status(400).send("Dados inválidos");
-  // } else {
-  //   if (baseDados.find(dado => dado.nome === contato.nome)) {
-  //     response.status(400).send("Contato já cadastrado")
-  //   } else {
-  //     contatosCollection.agenda.contatos.push(contato)
-  //     response.status(201).send(contato)
-  //   }
-  // }
-
 }
+const getByName = (request, response) =>{
+  // capturando o parametro inserido na url
+  const nomeParametro = request.params.nome;
+  //criando um regex para o nome
+  const regexNome = new RegExp(nomeParametro, "i");
+  // criando um objeto para usar o filtro
+  const filtro = {nome: regexNome};
+  // realizando a consulta do nome e informando erro caso não encontre
+  contatosCollection.find(filtro, (error, contatos) =>{
+    if (error){
+      return response.status(500).send(error)
+    }else{
+      if (contatos.length>0){
+        return response.status(200).send(contatos)
+      }else{
+        return response.sendStatus(404)
+      }
+      
+    }
+  })
+}
+//consultando pelo ID
+const getById = (request, response) =>{
+  const idParametro = request.params.id;
+  contatosCollection.findById(idParametro, (error, contato) =>{
+    if (error){
+      return response.status(500).send(error)
+    }else{
+      if(contato){
+        return response.status(200).send(contato)
+      }
+      return response.status(404).send("Contato não encontrado")
+    }
+  })
+}
+// deletando um contato pelo ID 
+const deleteId = (request, response) =>{
+  const idParametro = request.params.id;
+  contatosCollection.findByIdAndRemove(idParametro, (error, contato) =>{
+    if (error){
+      return response.status(500).send(error)
+    }else{
+      if(contato){
+        return response.status(200).send("Contato excluído com sucesso")
+      }
+      return response.status(404).send("Contato não encontrado")
+    }
+  })  
+}
+
 
 module.exports = {
   getAll,
-  add
+  add, 
+  getByName,
+  getById,
+  deleteId
 }
