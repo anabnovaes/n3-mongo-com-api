@@ -78,11 +78,33 @@ const deleteById = (request, response) =>{
   })  
 }
 
+//alterando um contato pelo id
+
+const updateById = (request, response) =>{
+// recebendo o id do contato que vai ser alterado
+  const idParam = request.params.id
+  // recebendo os dados do body
+  const contatoDoBody = request.body
+const options = { new : true }
+  contatosCollection.findByIdAndUpdate(idParam, contatoDoBody,options, (error, contato) =>{
+    if(error){
+
+      return response.status(500).send(error)
+    }else if(contato) {
+      return response.status(200).send(contato)
+    }else{
+      return response.sendStatus(404)
+    }
+  
+  })
+
+}
 
 module.exports = {
   getAll,
   add, 
   getByName,
   getById,
-  deleteById
+  deleteById, 
+  updateById
 }
